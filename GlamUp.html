@@ -1,40 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camp Activities</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camp Activities Inquiry</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    #camp-activities-inquiry {
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        margin-bottom: 8px;
+        color: #333;
+    }
+
+    select, textarea {
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
+
+    button[type="submit"] {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    #feedback-message {
+        margin-top: 20px;
+        text-align: center;
+        display: none;
+    }
+</style>
 </head>
 <body>
-    <section id="camp-activities-inquiry">
-        <h1>Camp Activities Inquiry</h1>
-        <form action="/submit-form" method="POST">
-            <label for="activity-select">Which camp activities are you most looking forward to?</label>
-            <select id="activity-select" name="activity">
-                <option value="">--Please choose an option--</option>
-                <option value="hiking">Hiking</option>
-                <option value="canoeing">Canoeing</option>
-                <option value="fishing">Fishing</option>
-                <option value="crafts">Crafts</option>
-                <option value="archery">Archery</option>
-            </select>
-    
-            <label for="food-allergies">Food Allergies (if any)</label>
-            <textarea id="food-allergies" name="food_allergies" rows="4" cols="50"></textarea>
-    
-            <label for="additional-info">Additional things the counselor should know</label>
-            <textarea id="additional-info" name="additional_info" rows="4" cols="50"></textarea>
-    
-            <button type="submit">Submit</button>
-        </form>
-        <div>
-            To do:
-            <li>rearrange screen - flexbox maybe</li>
-            <li>center the title</li>
-            <li>Have food allergies and additional pop after the prev section is complete.</li>
-            <li>Some other things along the way</li>
-            <li>Life update now working :-)</li>
-        </div>
-    </section> 
+
+<section id="camp-activities-inquiry">
+    <h1>Camp Activities Inquiry</h1>
+    <form id="camp-activities-form" action="/submit-form" method="POST">
+        <label for="activity-select">Which camp activities are you most looking forward to?</label>
+        <select id="activity-select" name="activity">
+            <option value="">--Please choose an option--</option>
+            <option value="hiking">Hiking</option>
+            <option value="canoeing">Canoeing</option>
+            <option value="fishing">Fishing</option>
+            <option value="crafts">Crafts</option>
+            <option value="archery">Archery</option>
+        </select>
+
+        <label for="food-allergies">Food Allergies (if any)</label>
+        <textarea id="food-allergies" name="food_allergies" rows="4" cols="50"></textarea>
+
+        <label for="additional-info">Additional things the counselor should know</label>
+        <textarea id="additional-info" name="additional_info" rows="4" cols="50"></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+    <div id="feedback-message"></div>
+</section>
+
+<script>
+    document.getElementById('camp-activities-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        // Simulating form submission (you can replace it with actual AJAX request)
+        setTimeout(function() {
+            document.getElementById('camp-activities-form').reset();
+            document.getElementById('feedback-message').innerText = "Form submitted successfully!";
+            document.getElementById('feedback-message').style.display = 'block';
+            setTimeout(function() {
+                document.getElementById('feedback-message').style.display = 'none';
+            }, 3000);
+        }, 1000);
+    });
+</script>
+
 </body>
 </html>

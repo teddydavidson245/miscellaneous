@@ -105,6 +105,85 @@ arr = [1 , 2 , 3 , 4 , 5 , 5]
 n = len(arr) 
 printTwoParts(arr, n) 
 
+## Problem 2
+## SPlit an array in three equal sum subarrays
+'''
+Consider an array A of n integers. Determine if array A can be split into three consecutive parts such that sum of each part is equal. If yes then print any index pair(i, j) such that sum(arr[0..i]) = sum(arr[i+1..j]) = sum(arr[j+1..n-1]), otherwise print -1. 
+
+Examples: 
+
+Input : arr[] = {1, 3, 4, 0, 4}
+Output : (1, 2)
+Sum of subarray arr[0..1] is equal to
+sum of subarray arr[2..3] and also to
+sum of subarray arr[4..4]. The sum is 4. 
+
+Input : arr[] = {2, 3, 4}
+Output : -1
+No three subarrays exist which have equal
+sum.
+
+#SOLUTION:
+Check if this sum is divisible by 3 or not.
+This is because if sum is not divisible then the sum cannot be split in three equal sum sets.
+If there are three contiguous subarrays with equal sum, then sum of each subarray is S/3. 
+Suppose the required pair of indices is (i, j) such that sum(arr[0..i]) = sum(arr[i+1..j]) = S/3. 
+Also sum(arr[0..i]) = preSum[i] and sum(arr[i+1..j]) = preSum[j] – preSum[i]. 
+This gives preSum[i] = preSum[j] – preSum[i] = S/3. This gives preSum[j] = 2*preSum[i]. 
+Thus, the problem reduces to find two indices i and j such that preSum[i] = S/3 and preSum[j] = 2*(S/3). 
+For finding these two indices, traverse the array and store sum upto current element in a variable preSum. 
+Check if preSum is equal to S/3 and 2*(S/3).
+'''
+def findSplit(arr, n):
+    # variable to store prefix sum
+    preSum = 0
+ 
+    # variables to store indices which have prefix sum divisible by S/3.
+    ind1 = -1
+    ind2 = -1
+ 
+    # variable to store sum of entire array. S
+    # Find entire sum of the array.
+    S = arr[0]
+    for i in range(1, n):
+        S += arr[i]
+ 
+    # Check if array can be split in three equal sum sets or not.
+    if(S % 3 != 0):
+        return 0
+     
+    # Variables to store sum S/3 and 2*(S/3).
+    S1 = S / 3
+    S2 = 2 * S1
+ 
+    # Loop until second last index as S2 should not be at the last
+    for i in range(0,n-1):
+        preSum += arr[i]
+         
+        # If prefix sum is equal to S/3 store current index.
+        if (preSum == S1 and ind1 == -1):
+            ind1 = i
+        # If prefix sum is equal to 2*(S/3) store current index.        
+        elif(preSum == S2 and ind1 != -1):
+            ind2 = i
+             
+            # Come out of the loop as both the required indices are found.
+            break   
+ 
+    # If both the indices are found then print them.
+    if (ind1 != -1 and ind2 != -1):
+        print ("({}, {})".format(ind1,ind2))
+        return 1
+     
+    # If indices are not found return 0.
+    return 0
+ 
+# Driver code
+arr = [ 1, 3, 4, 0, 4 ]
+n = len(arr)
+if (findSplit(arr, n) == 0) :
+    print ("-1") 
+
 #SUBSEQUENCE
 '''
 A subsequence is a sequence that can be derived from another sequence by removing zero or more elements,
@@ -113,6 +192,57 @@ A subsequence is a sequence that can be derived from another sequence by removin
 For the same above example, there are 15 sub-sequences. They are:
 (1), (2), (3), (4), (1,2), (1,3),(1,4), (2,3), (2,4), (3,4), (1,2,3), (1,2,4), (1,3,4), (2,3,4), (1,2,3,4).
 '''
+
+## Problem
+## Longest subsequence having equal numbers of 0 and 1
+''' Given a binary array, the task is to find the size of the largest sub_sequence which having equal number of zeros and one. 
+
+Examples : 
+
+Input : arr[] = { 1, 0, 0, 1, 0, 0, 0, 1 } 
+Output: 6
+
+Input : arr[] = { 0, 0, 1, 1, 1, 1, 1, 0, 0 }
+Output : 8
+'''
+def generateSubsequences(a, n):
+	result = 0
+	
+	# Number of subsequences is (2**n -1)
+	opsize = 2**n
+	
+	# Run from counter 000..1 to 111..1
+	for counter in range(opsize):
+		
+		# store count of zeros and one
+		countzero, countone = 0, 0
+		current_size = 0
+		
+		for j in range(n):
+			
+			# Check if jth bit in the counter is set. If set then 
+			# print jth element from arr[]
+			if counter & (1 << j):
+				if arr[j] == True:
+					countone += 1
+				else:
+					countzero += 1
+				current_size += 1
+		
+		# update maximum size
+		if countzero == countone:
+			result = max(current_size, 
+						result)
+	return result 
+
+# Driver code
+arr = [ 1, 0, 0, 1, 0, 0, 0, 1 ]
+n = len(arr)
+print("largest Subsequences having" +
+		" equal number of 0 & 1 is ",
+		generateSubsequences(arr, n))
+
+
 
 #SUBSET
 '''

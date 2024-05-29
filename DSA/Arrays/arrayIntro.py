@@ -251,6 +251,55 @@ A Subset is denoted as “⊆“. If set A is a subset of set B, it is represent
 
 For example, Let Set_A = {m, n, o, p, q}, Set_ B = {k, l, m, n, o, p, q, r}
 Then, A ⊆ B.
-
-
 '''
+
+## Problem
+## Find if there is any subset of size K with 0 sum in an array of -1 and +1
+'''
+Given an integer K and an array arr containing only 1 and -1, the task is to find if there is any subset of size K sum of whose elements is 0.
+
+Examples: 
+
+Input: arr[] = {1, -1, 1}, K = 2 
+Output: Yes 
+{1, -1} is a valid subset
+
+Input: arr[] = {1, 1, -1, -1, 1}, K = 5 
+Output: No 
+
+Approach: 
+
+In order for the sum to be 0, there has to be equal number of 1 and -1 in the subset.
+If K is odd then no subset will satisfy the given condition.
+Else if K is even then we need to choose exactly (K / 2) 1’s and (K / 2) -1’s in order to form the subset so that the sum of all of it’s elements is 0
+So, if K is even and number of 1’s ≥ K / 2 and number of -1’s ≥ K / 2 then print Yes else print No.
+'''
+def countOnes(n, a): 
+ 
+    count = 0
+    for i in range(0, n): 
+        if a[i] == 1: 
+            count += 1
+    return count 
+ 
+def isSubset(arr, n, k): 
+ 
+    countPos1 = countOnes(n, arr) 
+    countNeg1 = n - countPos1 
+ 
+    # If K is even and there are 
+    # at least K/2 1's and -1's 
+    return (k % 2 == 0 and countPos1 >= k // 2 and
+                           countNeg1 >= k // 2) 
+ 
+# Driver Code
+if __name__ == "__main__": 
+ 
+    a = [1, 1, -1, -1, 1] 
+    n = len(a) 
+    k = 5
+     
+    if isSubset(a, n, k) == True: 
+        print("Yes") 
+    else:
+        print("No") 
